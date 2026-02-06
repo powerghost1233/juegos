@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Biblioteca PS4 — Covers</title>
+  <meta name="description" content="Galería de portadas PS4 desde assets/ps4, lista para Git." />
+
+  <style>
+    :root{
+      --bg:#0b1020;
+      --panel:rgba(255,255,255,.06);
+      --border:rgba(255,255,255,.12);
+      --text:#eaf0ff;
+      --muted:rgba(234,240,255,.7);
+      --accent:#64ffda;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: radial-gradient(1200px 800px at 20% -10%, rgba(100,255,218,.20), transparent 55%),
+                  radial-gradient(900px 700px at 95% 10%, rgba(120,140,255,.18), transparent 50%),
+                  var(--bg);
+      color:var(--text);
+    }
+    header{
+      padding:28px 18px 10px;
+      max-width:1200px;
+      margin:0 auto;
+    }
+    h1{margin:0 0 6px; font-size:22px; letter-spacing:.2px}
+    p{margin:0; color:var(--muted); font-size:14px}
+    .toolbar{
+      max-width:1200px;
+      margin:14px auto 0;
+      padding:0 18px;
+      display:flex;
+      gap:10px;
+      align-items:center;
+      flex-wrap:wrap;
+    }
+    .search{
+      flex:1;
+      min-width:220px;
+      background:var(--panel);
+      border:1px solid var(--border);
+      border-radius:14px;
+      padding:12px 14px;
+      color:var(--text);
+      outline:none;
+    }
+    .pill{
+      padding:10px 12px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.04);
+      color:var(--muted);
+      font-size:13px;
+      user-select:none;
+    }
+
+    main{
+      max-width:1200px;
+      margin:14px auto 40px;
+      padding:0 18px;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap:14px;
+    }
+
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      border:1px solid var(--border);
+      border-radius:16px;
+      overflow:hidden;
+      box-shadow: var(--shadow);
+      transition: transform .15s ease, border-color .15s ease;
+    }
+    .card:hover{
+      transform: translateY(-2px);
+      border-color: rgba(100,255,218,.35);
+    }
+
+    .cover{
+      aspect-ratio: 3 / 4;
+      width:100%;
+      object-fit: cover;
+      display:block;
+      background: rgba(0,0,0,.25);
+    }
+
+    .meta{
+      padding:10px 12px 12px;
+    }
+    .title{
+      font-size:13px;
+      line-height:1.2;
+      margin:0 0 6px;
+      color:var(--text);
+      word-break: break-word;
+    }
+    .file{
+      font-size:12px;
+      color:var(--muted);
+      margin:0;
+    }
+
+    .empty{
+      display:none;
+      margin:18px 0;
+      padding:14px;
+      border:1px dashed rgba(255,255,255,.18);
+      border-radius:14px;
+      color:var(--muted);
+      background: rgba(255,255,255,.03);
+    }
+    footer{
+      max-width:1200px;
+      margin:0 auto;
+      padding:0 18px 30px;
+      color:rgba(234,240,255,.55);
+      font-size:12px;
+    }
+    a{color:inherit; text-decoration:none}
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>Biblioteca PS4 — Portadas</h1>
+    <p>Las imágenes se cargan desde <b>assets/ps4/</b>. Lista para subir a Git.</p>
+  </header>
+
+  <div class="toolbar">
+    <input id="q" class="search" type="search" placeholder="Buscar juego… (ej. elden, cod, assassin, nba)" autocomplete="off" />
+    <div class="pill" id="countPill">0 items</div>
+  </div>
+
+  <main>
+    <div id="grid" class="grid"></div>
+    <div id="empty" class="empty">No hay resultados con ese texto.</div>
+  </main>
+
+  <footer>
+    Consejo: si una portada no sale, revisa que el nombre del archivo coincida EXACTO y esté dentro de <b>assets/ps4/</b>.
+  </footer>
+
+  <script>
+  const files = [
+    "Assassins_Creed_Valhalla.png",
+    "Sonic_Frontiers.png",
+    "Cult_of_the_Lamb.png",
+    "Madden_NFL_24.png",
+    "Armored_Core_VI_Fires_of_Rubicon.png",
+    "The_Quarry.png",
+    "The_Witcher_3_Wild_Hunt_Complete_Edition.png",
+    "Back_4_Blood.png",
+    "Crash_Team_Rumble.png",
+    "Naruto_x_Boruto_Ultimate_Ninja_Storm_Connections.png",
+    "Wo_Long_Fallen_Dynasty.png",
+    "Star_Ocean_The_Second_Story_R.png",
+    "Final_Fantasy_VII_Remake.png",
+    "MediEvil.png",
+    "Crash_Bandicoot_4_Its_About_Time.png",
+    "Dead_Island_2.png",
+    "F1_23.png",
+    "PlayStation_Plus_Essential_12_Meses.png",
+    "The_Dark_Pictures_The_Devil_in_Me.png",
+    "Assassins_Creed_Odyssey.png",
+    "Ghost_of_Tsushima.png",
+    "Assassins_Creed_Mirage.png",
+    "Metal_Gear_Solid_Master_Collection_Vol_1.png",
+    "Sonic_Superstars.png",
+    "Diablo_IV.png",
+    "Red_Dead_Redemption.png",
+    "God_of_War_Ragnarok.png",
+    "NBA_2K24.png",
+    "Resident_Evil_4.png",
+    "The_Crew_Motorfest.png",
+    "Lies_of_P.png",
+    "EA_Sports_FC_26.png",
+    "Call_of_Duty_Black_Ops_7.png",
+    "Call_of_Duty_Modern_Warfare_III.png",
+    "PlayStation_Plus_Premium_12_Meses.png",
+    "TopSpin_2K25.png",
+    "MotoGP_24.png",
+    "F1_24.png",
+    "Elden_Ring_Shadow_of_the_Erdtree.png",
+    "NBA_2K25.png",
+    "Call_of_Duty_Black_Ops_6.png",
+    "Inazuma_Eleven_Victory_Road.png"
+  ];
+
+  const grid = document.getElementById("grid");
+  const empty = document.getElementById("empty");
+  const q = document.getElementById("q");
+  const countPill = document.getElementById("countPill");
+
+  const prettify = (filename) =>
+    filename
+      .replace(/\.[^/.]+$/, "")
+      .replace(/_/g, " ")
+      .replace(/\s+/g, " ")
+      .trim();
+
+  const render = (list) => {
+    grid.innerHTML = "";
+
+    list.forEach(name => {
+      const title = prettify(name);
+
+      const card = document.createElement("div");
+      card.className = "card";
+      card.innerHTML = `
+        <img class="cover" loading="lazy" src="assets/ps4/${name}" alt="${title}">
+        <div class="meta">
+          <p class="title">${title}</p>
+        </div>
+      `;
+      grid.appendChild(card);
+    });
+
+    countPill.textContent = `${list.length} items`;
+    empty.style.display = list.length ? "none" : "block";
+  };
+
+  render(files);
+
+  q.addEventListener("input", () => {
+    const term = q.value.toLowerCase().trim();
+    const filtered = files.filter(f =>
+      prettify(f).toLowerCase().includes(term)
+    );
+    render(filtered);
+  });
+</script>
+
+</body>
+</html>
