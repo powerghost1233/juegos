@@ -1,202 +1,122 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>PS5 — Biblioteca</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8">
+<title>PS5 – Catálogo</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    body {
-      margin: 0;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-      background: #0b0f1a;
-      color: #fff;
-    }
-
-    header {
-      padding: 24px;
-      text-align: center;
-      background: linear-gradient(135deg, #1f3cff, #00c6ff);
-    }
-
-    header h1 {
-      margin: 0;
-      font-size: 1.8rem;
-      letter-spacing: .5px;
-    }
-
-    .search {
-      margin-top: 12px;
-      padding: 10px 14px;
-      width: min(420px, 90%);
-      border-radius: 8px;
-      border: none;
-      font-size: 1rem;
-    }
-
-    .count {
-      margin-top: 10px;
-      font-size: .9rem;
-      opacity: .8;
-    }
-
-    main {
-      padding: 32px;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-      gap: 20px;
-    }
-
-    .card {
-      background: #12172a;
-      border-radius: 14px;
-      overflow: hidden;
-      transition: transform .2s ease, box-shadow .2s ease;
-      cursor: pointer;
-    }
-
-    .card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 18px 40px rgba(0,0,0,.45);
-    }
-
-    .cover {
-      width: 100%;
-      aspect-ratio: 3 / 4;
-      object-fit: cover;
-      display: block;
-    }
-
-    .meta {
-      padding: 12px;
-      text-align: center;
-    }
-
-    .title {
-      font-size: .95rem;
-      font-weight: 600;
-      line-height: 1.3;
-    }
-
-    .empty {
-      text-align: center;
-      opacity: .6;
-      margin-top: 60px;
-      display: none;
-    }
-  </style>
+<style>
+body{
+  margin:0;
+  background:#0b0b0b;
+  font-family:system-ui,-apple-system,Segoe UI,Roboto;
+  color:#fff;
+}
+header{
+  padding:20px;
+  text-align:center;
+  font-size:26px;
+  font-weight:700;
+  border-bottom:1px solid #222;
+}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
+  gap:18px;
+  padding:20px;
+}
+.card{
+  background:#111;
+  border:1px solid #1f1f1f;
+  border-radius:10px;
+  overflow:hidden;
+  transition:.2s;
+}
+.card:hover{
+  transform:translateY(-4px);
+  border-color:#2e8bff;
+}
+.card img{
+  width:100%;
+  display:block;
+}
+.card h3{
+  margin:0;
+  padding:10px;
+  font-size:14px;
+  text-align:center;
+  font-weight:500;
+}
+</style>
 </head>
 
 <body>
 
-<header>
-  <h1>PlayStation 5</h1>
-  <input id="q" class="search" type="search" placeholder="Buscar juego…">
-  <div id="countPill" class="count"></div>
-</header>
+<header>PlayStation 5 – Catálogo</header>
 
-<main>
-  <div id="grid" class="grid"></div>
-  <div id="empty" class="empty">No hay resultados</div>
-</main>
+<div class="grid">
 
-<script>
-  const files = [
-    "PS5_Plus_Essential.png",
-    "PS_Plus_Extra_12_Meses.png",
-    "Final_Fantasy_XVI_PS5.png",
-    "God_of_War_Ragnarok_PS5.png",
-    "Hogwarts_Legacy_PS5.png",
-    "Resident_Evil_Village_PS5.png",
-    "The_Last_of_Us_Part_I_PS5.png",
-    "Assassins_Creed_Valhalla_PS5.png",
-    "Assassins_Creed_Mirage_PS5.png",
-    "Call_of_Duty_Modern_Warfare_II_PS5.png",
-    "Final_Fantasy_VII_Remake_PS5.png",
-    "Red_Dead_Redemption_PS5.png",
-    "Avatar_Frontiers_of_Pandora_PS5.png",
-    "Marvel_Spider-Man_2_PS5.png",
-    "Call_of_Duty_Modern_Warfare_III_PS5.png",
-    "EA_Sports_UFC_5_PS5.png",
-    "Mortal_Kombat_1_PS5.png",
-    "PS_Plus_Premium_12_Meses.png",
-    "Final_Fantasy_VII_Rebirth_PS5.png",
-    "Star_Wars_Jedi_Survivor_PS5.png",
-    "Black_Myth_Wukong_PS5.png",
-    "NBA_2K25_PS5.png",
-    "TopSpin_2K25_PS5.png",
-    "Sand_Land_PS5.png",
-    "F1_24_PS5.png",
-    "Call_of_Duty_Black_Ops_6_PS5.png",
-    "It_Takes_Two_PS5.png",
-    "Astro_Bot_PS5.png",
-    "Silent_Hill_2_PS5.png",
-    "Dragon_Ball_Sparking_Zero_PS5.png",
-    "Forza_Horizon_5_PS5.png",
-    "Clair_Obscur_Expedition_33_PS5.png",
-    "Kingdom_Come_Deliverance_II_PS5.png",
-    "Assassins_Creed_Shadows_PS5.png",
-    "Split_Fiction_PS5.png",
-    "Ready_or_Not_PS5.png",
-    "Mafia_The_Old_Country_PS5.png",
-    "Death_Stranding_2_On_The_Beach_PS5.png",
-    "F1_25_PS5.png",
-    "EA_Sports_FC_26_PS5.png",
-    "Battlefield_6_PS5.png",
-    "Cronos_The_New_Dawn_PS5.png",
-    "Metal_Gear_Solid_Delta_Snake_Eater_PS5.png",
-    "Borderlands_4_PS5.png",
-    "ARC_Raiders_PS5.png",
-    "Ghost_of_Yotei_PS5.png",
-    "Call_of_Duty_Black_Ops_7_PS5.png"
-  ];
+<!-- 🔵 PS5 + PLUS -->
+<div class="card"><img src="assets/ps5/PS5_Plus_Essential.png"><h3>PS5 Plus Essential</h3></div>
+<div class="card"><img src="assets/ps5/PS_Plus_Extra_12_Meses.png"><h3>PS Plus Extra 12 Meses</h3></div>
+<div class="card"><img src="assets/ps5/PS_Plus_Premium_12_Meses.png"><h3>PS Plus Premium 12 Meses</h3></div>
 
-  const grid = document.getElementById("grid");
-  const empty = document.getElementById("empty");
-  const q = document.getElementById("q");
-  const countPill = document.getElementById("countPill");
+<!-- 🔵 PS5 -->
+<div class="card"><img src="assets/ps5/Final_Fantasy_XVI_PS5.png"><h3>Final Fantasy XVI</h3></div>
+<div class="card"><img src="assets/ps5/God_of_War_Ragnarok_PS5.png"><h3>God of War Ragnarök</h3></div>
+<div class="card"><img src="assets/ps5/Hogwarts_Legacy_PS5.png"><h3>Hogwarts Legacy</h3></div>
+<div class="card"><img src="assets/ps5/Resident_Evil_Village_PS5.png"><h3>Resident Evil Village</h3></div>
+<div class="card"><img src="assets/ps5/The_Last_of_Us_Part_I_PS5.png"><h3>The Last of Us Part I</h3></div>
+<div class="card"><img src="assets/ps5/Assassins_Creed_Valhalla_PS5.png"><h3>Assassin’s Creed Valhalla</h3></div>
+<div class="card"><img src="assets/ps5/Assassins_Creed_Mirage_PS5.png"><h3>Assassin’s Creed Mirage</h3></div>
+<div class="card"><img src="assets/ps5/Call_of_Duty_Modern_Warfare_II_PS5.png"><h3>COD Modern Warfare II</h3></div>
+<div class="card"><img src="assets/ps5/Call_of_Duty_Modern_Warfare_III_PS5.png"><h3>COD Modern Warfare III</h3></div>
+<div class="card"><img src="assets/ps5/Call_of_Duty_Black_Ops_6_PS5.png"><h3>COD Black Ops 6</h3></div>
+<div class="card"><img src="assets/ps5/Call_of_Duty_Black_Ops_7_PS5.png"><h3>COD Black Ops 7</h3></div>
 
-  const prettify = (filename) =>
-    filename
-      .replace(/_PS5/i, "")
-      .replace(/\.[^/.]+$/, "")
-      .replace(/_/g, " ")
-      .replace(/\s+/g, " ")
-      .trim();
+<div class="card"><img src="assets/ps5/Final_Fantasy_VII_Remake_PS5.png"><h3>FF VII Remake</h3></div>
+<div class="card"><img src="assets/ps5/Final_Fantasy_VII_Rebirth_PS5.png"><h3>FF VII Rebirth</h3></div>
 
-  const render = (list) => {
-    grid.innerHTML = "";
+<div class="card"><img src="assets/ps5/Marvel_Spider-Man_2_PS5.png"><h3>Marvel’s Spider-Man 2</h3></div>
+<div class="card"><img src="assets/ps5/Marvel_Spider-Man_Remastered.png"><h3>Marvel’s Spider-Man Remastered</h3></div>
+<div class="card"><img src="assets/ps5/Marvel_Spider-Man_Remastered_Alt.png"><h3>Spider-Man Remastered Alt</h3></div>
 
-    list.forEach(name => {
-      const title = prettify(name);
+<div class="card"><img src="assets/ps5/Metal_Gear_Solid_Delta_Snake_Eater_PS5.png"><h3>Metal Gear Solid Delta</h3></div>
+<div class="card"><img src="assets/ps5/Metal_Gear_Solid_Master_Collection_Vol1.png"><h3>MGS Master Collection Vol.1</h3></div>
 
-      const card = document.createElement("div");
-      card.className = "card";
-      card.innerHTML = `
-        <img class="cover" loading="lazy" src="assets/ps5/${name}" alt="${title}">
-        <div class="meta">
-          <p class="title">${title}</p>
-        </div>
-      `;
-      grid.appendChild(card);
-    });
+<div class="card"><img src="assets/ps5/Death_Stranding_2_On_The_Beach_PS5.png"><h3>Death Stranding 2</h3></div>
+<div class="card"><img src="assets/ps5/Silent_Hill_2_PS5.png"><h3>Silent Hill 2</h3></div>
+<div class="card"><img src="assets/ps5/Dead_Space.png"><h3>Dead Space</h3></div>
 
-    countPill.textContent = `${list.length} juegos`;
-    empty.style.display = list.length ? "none" : "block";
-  };
+<div class="card"><img src="assets/ps5/NBA_2K23.png"><h3>NBA 2K23</h3></div>
+<div class="card"><img src="assets/ps5/NBA_2K24.png"><h3>NBA 2K24</h3></div>
+<div class="card"><img src="assets/ps5/NBA_2K25_PS5.png"><h3>NBA 2K25</h3></div>
+<div class="card"><img src="assets/ps5/NBA_2K26.png"><h3>NBA 2K26</h3></div>
 
-  render(files);
+<div class="card"><img src="assets/ps5/F1_24_PS5.png"><h3>F1 24</h3></div>
+<div class="card"><img src="assets/ps5/F1_25_PS5.png"><h3>F1 25</h3></div>
+<div class="card"><img src="assets/ps5/F1_Manager_23.png"><h3>F1 Manager 23</h3></div>
+<div class="card"><img src="assets/ps5/F1_Manager_24.png"><h3>F1 Manager 24</h3></div>
 
-  q.addEventListener("input", () => {
-    const term = q.value.toLowerCase().trim();
-    const filtered = files.filter(f =>
-      prettify(f).toLowerCase().includes(term)
-    );
-    render(filtered);
-  });
+<div class="card"><img src="assets/ps5/EA_Sports_FC_26_PS5.png"><h3>EA Sports FC 26</h3></div>
+<div class="card"><img src="assets/ps5/EA_Sports_UFC_5_PS5.png"><h3>EA Sports UFC 5</h3></div>
+<div class="card"><img src="assets/ps5/EA_Sports_WRC.png"><h3>EA Sports WRC</h3></div>
+
+<div class="card"><img src="assets/ps5/Ghost_of_Tsushima.png"><h3>Ghost of Tsushima</h3></div>
+<div class="card"><img src="assets/ps5/Ghost_of_Yotei_PS5.png"><h3>Ghost of Yotei</h3></div>
+
+<div class="card"><img src="assets/ps5/Until_Dawn.png"><h3>Until Dawn</h3></div>
+<div class="card"><img src="assets/ps5/Alan_Wake_II.png"><h3>Alan Wake II</h3></div>
+<div class="card"><img src="assets/ps5/Little_Nightmares_III.png"><h3>Little Nightmares III</h3></div>
+
+<div class="card"><img src="assets/ps5/Inazuma_Eleven_Victory_Road.png"><h3>Inazuma Eleven Victory Road</h3></div>
+<div class="card"><img src="assets/ps5/Jurassic_World_Evolution_3.png"><h3>Jurassic World Evolution 3</h3></div>
+
+</div>
+
+</body>
+</html>
+
 </script>
 
 </body>
